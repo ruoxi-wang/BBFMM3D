@@ -1,8 +1,8 @@
-#BBFMM3D  
+# BBFMM3D  
 
 
 
-###1. INTRODUCTION
+### 1. INTRODUCTION
 
 BBFMM3D is an open source package of the <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">Black-box Fast Multipole Method</a> in 3 dimensions.   
 The Black-box Fast Multipole Method is an O(N) fast multipole method, which is a technique to calculate sums of the form  
@@ -21,7 +21,7 @@ Please cite the following paper if you use this code:
 
 Fong, William, and Eric Darve. "The black-box fast multipole methodshod." Journal of Computational Physics 228, no. 23 (2009): 8712-8725. You can see details <a href="http://www.sciencedirect.com/science/article/pii/S0021999109004665">here</a>.
 
-###2. DIRECTORIES AND FILES
+### 2. DIRECTORIES AND FILES
 
 
 	./examples/		:	Example input C++ codes; Needed to read input from user or from input file.  
@@ -33,17 +33,17 @@ Fong, William, and Eric Darve. "The black-box fast multipole methodshod." Journa
 	./License.md	:	License file  
 	./Makefile		:	Makefile
 	
-###3. TUTORIAL
-####3.1 To Get Started  
+### 3. TUTORIAL
+#### 3.1 To Get Started  
 To check whether things are set up correctly, you can perform the following: Go to the directory where Makefile is in, then key in the following three commands in the terminal:
 
 		make binary_file_mykernel
 		cd exec/
 		./binary_file_mykernel
 
-####3.2 Basic usage
+#### 3.2 Basic usage
 
-#####3.2.1 BBFMM3D with standard kernel
+##### 3.2.1 BBFMM3D with standard kernel
 
 The basic usage of BBFMM3D with standard kernel is as follows: 
 
@@ -175,7 +175,7 @@ Options of kernels:
     		
 If you want to define your own kernel, please see **3.2.3**.
 
-#####3.2.3 BBFMM3D with user defined kernel
+##### 3.2.3 BBFMM3D with user defined kernel
 
 The basic usage is almost the same as **3.2.1** except that you have to define your own routine of computing kernel. One example code is as follows:  
 
@@ -241,7 +241,7 @@ You also need to define information about kernel inside `setHomogen(string& kern
                       
                                 
                            
-#####3.2.4 Usage of multiple sources with same kernel
+##### 3.2.4 Usage of multiple sources with same kernel
 
 If you want to compute with different sources (source points, field points, charges) but with same kernel and number of Chebyshev nodes, you can do it in one file:
 e.g.  
@@ -267,14 +267,14 @@ e.g.
 
 The basic usage is already domonstrated in **3.2.1** and **3.2.3**. Once you have built the FMM tree, you can use different sources to compute the matrix-vector multiplication without rebuilding the tree. You can choose kernel type from standard kernels given by us ( see **3.2.2** ), or you can define your own kernel ( see **3.2.3** )
 
-####3.3 Pre-computation
+#### 3.3 Pre-computation
 
 The power of this package is in the pre-computing part, which is much more computationally expensive than computing part. This package takes advantage of the fact that for a given kernel and number of chebyshev nodes, the precomputing part is the same, so for a fixed kernel and number of chebyshev nodes, it generates 3 files storing information of FMM tree in the folder /output. Everytime when we use the same kernel type and number of chebyshev nodes, we can directly read from the files, which would save a lot of time.
 
 Note: it is true that sometimes with the pre-computation step, the code will be slower than direct calculation. But if the file already exists, then when doing more computations it will be faster than direct calculation. If you are using your own kernel, make sure to either change the kernelType or delete the existed file if you changed your kernel. 
 
 
-####3.4 Test Interplation Error  
+#### 3.4 Test Interplation Error  
 To give the user an idea of how large the interplation error is, we have provided a routine of computing the interplation error. If you want to test the interplation error between a cluster A (of size length) and a cluster B, where B is in the interplation list of A, you can do the following:  
 
 	kernel_LaplacianForce testTree(&dof,1/pow(2,2),2, n, eps, use_chebyshev);
@@ -300,10 +300,10 @@ The second line is the routine to compute interplation error.
 
 
 
-###4. ROUTINES FOR INPUTING AND OUTPUTING DATA 
+### 4. ROUTINES FOR INPUTING AND OUTPUTING DATA 
 We have provided several routines for reading data from binary file, and writing data into binary file.	
 
-####4.1 Reading meta data from text file
+#### 4.1 Reading meta data from text file
 	
 	void read_Metadata(const string& filenameMetadata,double& L, int& n, doft& dof, int& Ns, int& Nf, int& m, int& level);
 The first argument, filenameMetadata is the filename for your meta data. L stores the length of simulation cell (assumed to be a cube); n stores the number of chebyshev nodes per dimension; dof stores (???); Ns stores the number of source points; Nf stores the number of field points; m stores the number of sets of charges; level stores the number of levels in the hierarchy tree;
@@ -316,7 +316,7 @@ For example:
 
  	1,4,9,6,800,500,1,2
  	 	
-####4.2 Reading from binary file  
+#### 4.2 Reading from binary file  
 
 	void read_Sources(const string& filenameField, vector3 *field, const int& Nf, const string& filenameSource, vector3 *source, const int& Ns, const string& filenameCharge, double *q, const int& m, const doft& dof);
 
@@ -361,13 +361,13 @@ The first argument filenameField, the forth argument filenameSource and the seve
 	
 		
 	
-####4.3 Writing into binary file  
+#### 4.3 Writing into binary file  
 	
 	void write_Into_Binary_File(const string& filename, double* outdata, int numOfElems);  
 This first argument is the filename for your output data. The second argument is a pointer to the output data, and the last argument is the number of elements in the array of your output data.  
 
 
-###5. EXAMPLES
+### 5. EXAMPLES
 
 We have provided several examples for BBFMM3D. Go to examples/, read through the files both must be self explanatory for the most part.
 You can use our examples with your own input.
@@ -424,7 +424,7 @@ Both gen_binary_file.m and test.cpp shows how our test binary files are generate
 	 
 When using our examples, make sure that the input file format are the same as described in  **4.**  	
 
-####5.2 Run examples  
+#### 5.2 Run examples  
 
 Here we give an example:  
 If you want to use `"binary_file_standard_kernel.cpp"`  
